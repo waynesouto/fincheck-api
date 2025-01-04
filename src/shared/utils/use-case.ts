@@ -62,7 +62,7 @@ export class UseCaseHandler<T, K> implements IWrappedUseCase<T, K> {
 				body: error.message,
 				process: ProcessOptions.FAILED,
 				route: this.useCase.constructor.name,
-				status_code: 500
+				statusCode: 500
 			})
 			return new ServerErrorException(error.message)
 		}

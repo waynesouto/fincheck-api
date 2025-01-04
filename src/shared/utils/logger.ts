@@ -4,14 +4,14 @@ import { ProcessOptions } from '@utils/response'
 type IResponseLogger<T> = {
 	route: string
 	process: ProcessOptions
-	status_code: number
+	statusCode: number
 	body: T | string
 }
 
 export const responseLogger = <T>(message: IResponseLogger<T>) => {
 	// Log result of operations in use-cases
-	const { route, process, status_code, body } = message
-	let logMessage = `[fincheck] Route: ${route} result was "${process}" with status code ${status_code}.`
+	const { route, process, statusCode, body } = message
+	let logMessage = `[fincheck] Route: ${route} result was "${process}" with status code ${statusCode}.`
 	if (process === 'failed') {
 		logMessage += ` The failed reason was ${body?.toString()}.`
 	}

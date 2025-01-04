@@ -1,7 +1,7 @@
 export type IPagination = {
-	page_size: number
-	total_pages: number
-	total_count: number
+	pageSize: number
+	totalPages: number
+	totalCount: number
 }
 
 export const defaultPageSize = 25
@@ -26,12 +26,12 @@ export const paginate = (page?: number, size?: number) => {
 
 export const createPaginationResult = async(
 	counter: Promise<number>,
-	page_size: number = defaultPageSize
+	pageSize: number = defaultPageSize
 ): Promise<IPagination> => {
 	const count = await Promise.resolve(counter)
 	return {
-		page_size,
-		total_pages: Math.ceil(count / page_size),
-		total_count: count
+		pageSize,
+		totalPages: Math.ceil(count / pageSize),
+		totalCount: count
 	}
 }

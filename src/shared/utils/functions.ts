@@ -1,3 +1,5 @@
+import { CustomOmit } from '@utils/types'
+
 /**
  * Wraps a promise in an optional manner based on a condition.
  * If the condition is true, the promise is returned.
@@ -21,4 +23,16 @@ export const optionalPromiseWrapper = <T>(
  */
 export const removeNonNumericChars = (text: string): string => {
 	return text.replace(/\D/g, '')
+}
+
+export const omitKeys = <T extends object, U extends keyof T>(
+	obj: T,
+	keys: U[]
+): CustomOmit<T, U> => {
+	return Object.keys(obj)
+		.filter((key) => !keys.includes(key as U))
+		.reduce((acc, key) => ({
+			...acc,
+			[key]: obj[key as U]
+		}), {} as CustomOmit<T, U>)
 }
