@@ -8,6 +8,20 @@
       "when": 1735831747172,
       "tag": "20250102152907_init",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1735844897452,
+      "tag": "20250102190817_remove_credit_card_value_from_transaction_type_enum",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1736018999408,
+      "tag": "20250104192959_create_refresh_tokens_table",
+      "breakpoints": true
     }
   ]
 }

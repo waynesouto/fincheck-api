@@ -5,7 +5,8 @@ import * as schema from './schema'
 export const usersRelations = relations(schema.users, ({ many }) => ({
 	bankAccounts: many(schema.bankAccounts),
 	categories: many(schema.categories),
-	transactions: many(schema.transactions)
+	transactions: many(schema.transactions),
+	refreshTokens: many(schema.refreshTokens)
 }))
 
 export const bankAccountsRelations = relations(schema.bankAccounts, ({ many, one }) => ({
