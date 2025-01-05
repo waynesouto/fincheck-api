@@ -35,12 +35,13 @@ ARG AUTH_ACCESS_EXPIRES
 ARG AUTH_REFRESH_SECRET
 ARG AUTH_REFRESH_EXPIRES
 
-ENV NODE_ENV=$NODE_ENV \
-	DATABASE_URL=$DATABASE_URL \
-	AUTH_ACCESS_SECRET=$AUTH_ACCESS_SECRET \
-	AUTH_ACCESS_EXPIRES=$AUTH_ACCESS_EXPIRES \
-	AUTH_REFRESH_SECRET=$AUTH_REFRESH_SECRET \
-	AUTH_REFRESH_EXPIRES=$AUTH_REFRESH_EXPIRES
+# Create the .env file with the necessary environment variables
+RUN echo "NODE_ENV=$NODE_ENV" > .env \
+    && echo "DATABASE_URL=$DATABASE_URL" >> .env \
+    && echo "AUTH_ACCESS_SECRET=$AUTH_ACCESS_SECRET" >> .env \
+    && echo "AUTH_ACCESS_EXPIRES=$AUTH_ACCESS_EXPIRES" >> .env \
+    && echo "AUTH_REFRESH_SECRET=$AUTH_REFRESH_SECRET" >> .env \
+    && echo "AUTH_REFRESH_EXPIRES=$AUTH_REFRESH_EXPIRES" >> .env
 
 # Remove unwanted files and directories from node_modules folder
 RUN modclean -n default:safe
