@@ -4,7 +4,7 @@ import { CustomOmit } from '@utils/types'
 export type ICreateParams = CustomOmit<ICategory, 'id' | 'createdAt' | 'updatedAt'>
 
 export type IFindManyParams = {
-	userId: string
+	userId?: string
 	type?: TransactionType
 	page?: number
 }
@@ -13,7 +13,7 @@ export type ICountParams = CustomOmit<IFindManyParams, 'page'>
 
 export type IUpdateParams = {
 	id: string
-	data: Partial<ICreateParams>
+	data: Partial<CustomOmit<ICreateParams, 'userId'>>
 }
 
 export interface ICategoriesRepository {

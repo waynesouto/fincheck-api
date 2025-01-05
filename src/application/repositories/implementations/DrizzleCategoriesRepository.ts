@@ -69,7 +69,10 @@ export class DrizzleCategoriesRepository implements ICategoriesRepository {
 	private mountWhere({
 		userId, type
 	}: IMountWhereParams): SQL[] {
-		const where: SQL[] = [eq(categories.userId, userId)]
+		const where: SQL[] = []
+		if (userId !== undefined) {
+			where.push(eq(categories.userId, userId))
+		}
 		if (type !== undefined) {
 			where.push(eq(categories.type, type))
 		}
