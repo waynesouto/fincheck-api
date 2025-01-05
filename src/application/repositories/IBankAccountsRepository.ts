@@ -9,17 +9,26 @@ export type IFindManyParams = {
 	page?: number
 }
 
+export type IFindManyResponse = Array<{ currentBalance: number } & IBankAccount>
+
+export type IFindByIdExtendedResponse = {
+	currentBalance: number
+	totalIncomes: number
+	totalExpenses: number
+} & IBankAccount
+
 export type ICountParams = CustomOmit<IFindManyParams, 'page'>
 
 export type IUpdateParams = {
 	id: string
-	data: Partial<ICreateParams>
+	data: Partial<CustomOmit<ICreateParams, 'userId'>>
 }
 
 export interface IBankAccountsRepository {
 	create(params: ICreateParams): Promise<IBankAccount>
 	findById(id: string): Promise<IBankAccount | null>
-	findMany(params: IFindManyParams): Promise<IBankAccount[]>
+	findByIdExtended(id: string): Promise<IFindByIdExtendedResponse | null>
+	findMany(params: IFindManyParams): Promise<IFindManyResponse>
 	count(params: ICountParams): Promise<number>
 	update(params: IUpdateParams): Promise<IBankAccount>
 	delete(id: string): Promise<void>
