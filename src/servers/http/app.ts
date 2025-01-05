@@ -1,6 +1,8 @@
 import fastify from 'fastify'
 import cookie from '@fastify/cookie'
 import jwt from '@fastify/jwt'
+import compress from '@fastify/compress'
+import cors from '@fastify/cors'
 
 import { routes } from '@http/routes'
 import { authenticate } from '@http/middlewares/authenticate'
@@ -21,11 +23,19 @@ declare module 'fastify' {
 	}
 }
 
-// plugins
 const app = fastify({
 	ignoreTrailingSlash: true
 })
+
+// plugins
 app.register(cookie, { hook: 'onRequest' })
+app.register(compress)
+app.register(cors, {
+	origin: (origin, cb) => {
+		cb(null, origin || true)
+	},
+	credentials: true
+})
 
 app.register(jwt, {
 	secret: env.AUTH_ACCESS_SECRET,
