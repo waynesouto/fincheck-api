@@ -23,10 +23,10 @@ COPY . .
 # RUN npm ci --only=production
 RUN npm install --ignore-engines --production
 # Install `modclean` to remove unwanted files and directories from node_modules folder
-RUN npm install modclean -- save
+RUN npm install modclean --save
 
 # Add env path to machine
-# ENV PATH="${PATH}:/fincheck-api/node_modules/.bin"
+ENV PATH="${PATH}:/fincheck-api/node_modules/.bin"
 
 ARG NODE_ENV
 ARG DATABASE_URL
