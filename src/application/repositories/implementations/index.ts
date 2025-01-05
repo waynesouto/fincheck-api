@@ -1,4 +1,5 @@
 export * from './DrizzleBankAccountsRepository'
 export * from './DrizzleCategoriesRepository'
 export * from './DrizzleRefreshTokensRepository'
+export * from './DrizzleTransactionsRepository'
 export * from './DrizzleUsersRepository'
