@@ -1,0 +1,9 @@
+services:
+  core:
+    build:
+      context: ./
+    env_file:
+      - .env
+    environment:
+      - PORT=3000
+    network_mode: "host"
