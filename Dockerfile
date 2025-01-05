@@ -26,7 +26,21 @@ RUN npm install --ignore-engines --production
 RUN npm install modclean -- save
 
 # Add env path to machine
-ENV PATH="${PATH}:/fincheck-api/node_modules/.bin"
+# ENV PATH="${PATH}:/fincheck-api/node_modules/.bin"
+
+ARG NODE_ENV
+ARG DATABASE_URL
+ARG AUTH_ACCESS_SECRET
+ARG AUTH_ACCESS_EXPIRES
+ARG AUTH_REFRESH_SECRET
+ARG AUTH_REFRESH_EXPIRES
+
+ENV NODE_ENV=$NODE_ENV \
+	DATABASE_URL=$DATABASE_URL \
+	AUTH_ACCESS_SECRET=$AUTH_ACCESS_SECRET \
+	AUTH_ACCESS_EXPIRES=$AUTH_ACCESS_EXPIRES \
+	AUTH_REFRESH_SECRET=$AUTH_REFRESH_SECRET \
+	AUTH_REFRESH_EXPIRES=$AUTH_REFRESH_EXPIRES
 
 # Remove unwanted files and directories from node_modules folder
 RUN modclean -n default:safe
