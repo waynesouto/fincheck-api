@@ -66,7 +66,7 @@ export const sendAuthResponse = (
 			token: refreshToken,
 			expiresAt: addDays(new Date(), parseInt(env.AUTH_REFRESH_EXPIRES))
 		})
-		res.setCookie(cookiesKeys.IS_AUTHENTICATED, refreshToken, {
+		res.setCookie(cookiesKeys.REFRESH_TOKEN, refreshToken, {
 			...cookieConfig,
 			path: '/auth/refresh'
 		})
