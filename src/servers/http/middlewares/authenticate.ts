@@ -2,7 +2,7 @@ import { FastifyReply, FastifyRequest } from 'fastify'
 
 import { IFailedResponse } from '@utils/response'
 import { UnauthorizedException } from '@utils/exception'
-import { accessTokenCookieName } from '@utils/token'
+import { cookiesKeys } from '@utils/token'
 
 export const authenticate = () => async(
 	req: FastifyRequest,
@@ -13,7 +13,7 @@ export const authenticate = () => async(
 	} catch {
 		const { statusCode, ...result } = new UnauthorizedException()
 		return res
-			.clearCookie(accessTokenCookieName)
+			.clearCookie(cookiesKeys.ACCESS_TOKEN)
 			.code(statusCode)
 			.send(result)
 	}

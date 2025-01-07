@@ -6,7 +6,7 @@ import { DrizzleRefreshTokensRepository } from '@repositories/implementations'
 import { GenericRequest } from '@utils/fastify/types'
 import { env } from '@utils/env'
 import { IResponse } from '@utils/response'
-import { accessTokenCookieName, isAuthenticatedCookieName, refreshTokenCookieName } from '@utils/token'
+import { cookiesKeys } from '@utils/token'
 import { optionalPromiseWrapper } from '@utils/functions'
 
 type SendResponseMiddleware<T> = (
@@ -66,18 +66,18 @@ export const sendAuthResponse = (
 			token: refreshToken,
 			expiresAt: addDays(new Date(), parseInt(env.AUTH_REFRESH_EXPIRES))
 		})
-		res.setCookie(refreshTokenCookieName, refreshToken, {
+		res.setCookie(cookiesKeys.IS_AUTHENTICATED, refreshToken, {
 			...cookieConfig,
 			path: '/auth/refresh'
 		})
 	}
 
 	return res
-		.setCookie(accessTokenCookieName, accessToken, {
+		.setCookie(cookiesKeys.ACCESS_TOKEN, accessToken, {
 			...cookieConfig,
 			path: '/'
 		})
-		.setCookie(isAuthenticatedCookieName, 'true', {
+		.setCookie(cookiesKeys.IS_AUTHENTICATED, 'true', {
 			...cookieConfig,
 			path: '/',
 			httpOnly: false

@@ -3,6 +3,8 @@ import { env } from '@utils/env'
 const suffix = env.NODE_ENV === 'production' ? '' : '-homolog'
 const namespace = '@fincheck'
 
-export const accessTokenCookieName = `${namespace}:access-token${suffix}`
-export const refreshTokenCookieName = `${namespace}:refresh-token${suffix}`
-export const isAuthenticatedCookieName = `${namespace}:is-authenticated${suffix}`
+export const cookiesKeys = {
+	ACCESS_TOKEN: `${namespace}:access-token${suffix}`,
+	REFRESH_TOKEN: `${namespace}:refresh-token${suffix}`,
+	IS_AUTHENTICATED: `${namespace}:is-authenticated${suffix}`
+}

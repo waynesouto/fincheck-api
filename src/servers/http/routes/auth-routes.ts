@@ -4,14 +4,14 @@ import { applyUseCase } from '@http/middlewares/apply-use-case'
 import { sendAuthResponse, sendResponse } from '@http/middlewares/send-response'
 import { addCookiesToBody } from '@http/middlewares/add-cookies-to-body'
 
-import { accessTokenCookieName, isAuthenticatedCookieName, refreshTokenCookieName } from '@utils/token'
+import { cookiesKeys } from '@utils/token'
 
 import { generateAccessToken, login, logout, register } from '@use-cases/auth'
 
 export const authRoutes = async(fastify: FastifyInstance) => {
 	const preValidation = [
 		addCookiesToBody({
-			mapCookies: { [refreshTokenCookieName]: 'refreshToken' }
+			mapCookies: { [cookiesKeys.REFRESH_TOKEN]: 'refreshToken' }
 		})
 	]
 
@@ -44,7 +44,7 @@ export const authRoutes = async(fastify: FastifyInstance) => {
 
 const clearCookies = (res: FastifyReply) => {
 	res
-		.clearCookie(accessTokenCookieName)
-		.clearCookie(refreshTokenCookieName, { path: '/auth/refresh' })
-		.clearCookie(isAuthenticatedCookieName)
+		.clearCookie(cookiesKeys.ACCESS_TOKEN)
+		.clearCookie(cookiesKeys.REFRESH_TOKEN, { path: '/auth/refresh' })
+		.clearCookie(cookiesKeys.IS_AUTHENTICATED)
 }

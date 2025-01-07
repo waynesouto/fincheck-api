@@ -12,7 +12,7 @@ import { responseLogger } from '@utils/logger'
 import { IFailedResponse, ProcessOptions } from '@utils/response'
 import { GenericRequest } from '@utils/fastify/types'
 import { env } from '@utils/env'
-import { accessTokenCookieName } from '@utils/token'
+import { cookiesKeys } from '@utils/token'
 
 declare module 'fastify' {
 	interface FastifyInstance {
@@ -41,7 +41,7 @@ app.register(jwt, {
 	secret: env.AUTH_ACCESS_SECRET,
 	sign: { expiresIn: env.AUTH_ACCESS_EXPIRES },
 	cookie: {
-		cookieName: accessTokenCookieName,
+		cookieName: cookiesKeys.ACCESS_TOKEN,
 		signed: false
 	}
 })
