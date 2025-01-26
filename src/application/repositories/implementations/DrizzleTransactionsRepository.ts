@@ -1,4 +1,4 @@
-import { and, count, eq, getTableColumns, SQL, sql } from 'drizzle-orm'
+import { and, between, count, eq, getTableColumns, SQL, sql } from 'drizzle-orm'
 
 import { ITransaction } from '@entities/ITransaction'
 import { drizzle, withPagination } from '@clients/drizzle'
@@ -86,7 +86,7 @@ export class DrizzleTransactionsRepository implements ITransactionsRepository {
 	}
 
 	private mountWhere({
-		userId, type
+		userId, type, bankAccountId, date
 	}: IMountWhereParams): SQL[] {
 		const where:SQL[] = []
 		if (userId !== undefined) {
@@ -95,7 +95,12 @@ export class DrizzleTransactionsRepository implements ITransactionsRepository {
 		if (type !== undefined) {
 			where.push(eq(transactions.type, type))
 		}
-
+		if (bankAccountId !== undefined) {
+			where.push(eq(transactions.bankAccountId, bankAccountId))
+		}
+		if (date !== undefined) {
+			where.push(between(transactions.date, date.start, date.end))
+		}
 		return where
 	}
 

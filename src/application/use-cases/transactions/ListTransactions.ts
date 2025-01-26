@@ -8,12 +8,16 @@ import { validator } from '@utils/validator'
 import { IUseCase, IWrappedUseCase } from '@utils/use-case'
 import { optionalPromiseWrapper } from '@utils/functions'
 import { createPaginationResult, IPagination } from '@utils/pagination'
+import { lastDayOfMonth, startOfMonth } from 'date-fns'
 
 type ListTransactionsRequest = {
 	userId: string
 	data: Partial<{
-		page?: number
-		type?: TransactionType
+		page: number
+		bankAccountId: string
+		month: number
+		year: number
+		type: TransactionType
 	}>
 }
 type ListTransactionsResponse = {
@@ -34,10 +38,19 @@ export class ListTransactions implements IUseCase<T, K> {
 	) {}
 
 	async execute({ userId, data }: T): Promise<K> {
-		const { page, type } = data
+		const { page, type, bankAccountId, month, year } = data
+
 		const filters: ICountParams = {
 			userId,
-			type
+			type,
+			bankAccountId
+		}
+		if (year !== undefined && month !== undefined) {
+			const date = new Date(year, month)
+			filters.date = {
+				start: startOfMonth(date),
+				end: lastDayOfMonth(date)
+			}
 		}
 
 		const [transactions, pagination] = await Promise.all([
@@ -56,7 +69,10 @@ export class ListTransactions implements IUseCase<T, K> {
 			userId: v.string(),
 			data: v.object({
 				page: v.number().optional(),
-				type: v.enum(TransactionTypeEnum).optional()
+				type: v.enum(TransactionTypeEnum).optional(),
+				bankAccountId: v.string().optional(),
+				month: v.number().optional(),
+				year: v.number().optional()
 			})
 		})
 		return await validator(schema, data)

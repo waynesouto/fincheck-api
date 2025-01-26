@@ -3,11 +3,16 @@ import { CustomOmit } from '@utils/types'
 
 export type ICreateParams = CustomOmit<ITransaction, 'id' | 'createdAt' | 'updatedAt'>
 
-export type IFindManyParams = {
-	userId?: string
-	type?: TransactionType
-	page?: number
-}
+export type IFindManyParams = Partial<{
+	userId: string
+	type: TransactionType
+	bankAccountId: string
+	date: {
+		start: Date
+		end: Date
+	}
+	page: number
+}>
 
 export type IFindManyResponse = Array<{
 	category: ICategory | null
