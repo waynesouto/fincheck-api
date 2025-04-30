@@ -1,20 +1,16 @@
 import { FastifyRequest } from 'fastify'
 
 import { IWrappedUseCase } from '@utils/use-case'
-import { responseLogger } from '@utils/logger'
 import { IResponse } from '@utils/response'
 import { GenericRequest } from '@utils/fastify/types'
 
-export interface IApplyUseCaseOptions {
+export type IApplyUseCaseOptions = {
 	separateRequestData?: boolean
-	logResponse?:
-		| { validator: (status: number) => boolean }
-		| true
 }
 
 export const applyUseCase = <T = unknown, K = unknown>(
 	useCase: () => IWrappedUseCase<T, K>,
-	{ separateRequestData, logResponse }: IApplyUseCaseOptions = {}
+	{ separateRequestData }: IApplyUseCaseOptions = {}
 ) => async(
 	req: FastifyRequest<GenericRequest>
 ): Promise<IResponse<K>> => {
@@ -33,17 +29,5 @@ export const applyUseCase = <T = unknown, K = unknown>(
 
 	data = { ...data, ...req.params }
 
-	const result = await useCase().handle(data as T)
-
-	if (
-		logResponse !== undefined &&
-		(typeof logResponse === 'boolean' || logResponse.validator(result.statusCode))
-	) {
-		responseLogger({
-			...result,
-			route: req.originalUrl
-		})
-	}
-
-	return result
+	return await useCase().handle(data as T)
 }
