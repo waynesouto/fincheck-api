@@ -6,10 +6,9 @@
 		"node": ">=20.6.0"
 	},
 	"scripts": {
-		"build": "tsc && tsc-alias",
-		"watch": "tsc && (concurrently \"tsc -w\" \"tsc-alias -w\")",
-		"start": "node --env-file=.env dist/src/servers/index.js",
-		"start:dev": "node --watch --watch-preserve-output --env-file=.env dist/src/servers/index.js",
+		"build": "tsup-node",
+		"start": "node --env-file=.env dist/servers/index.js",
+		"start:dev": "tsx watch --env-file=.env src/servers/index.ts",
 		"db:generate": "drizzle-kit generate",
 		"db:migrate": "drizzle-kit migrate",
 		"db:drop": "drizzle-kit drop",
@@ -41,9 +40,9 @@
 		"@types/bcryptjs": "^2.4.6",
 		"@types/date-fns": "^2.6.3",
 		"@types/node": "^22.10.2",
-		"concurrently": "^9.1.1",
 		"drizzle-kit": "^0.30.1",
-		"tsc-alias": "^1.8.10",
+		"tsup": "^8.4.0",
+		"tsx": "^4.19.4",
 		"typescript": "^5.7.2"
 	}
 }

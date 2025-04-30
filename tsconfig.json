@@ -54,16 +54,11 @@
 			],
 		},
 	},
-	"tsc-alias": {
-		"resolveFullPaths": true,
-		"verbose": false
-	},
 	"exclude": [
 		"node_modules"
 	],
 	"include": [
 		"./src/**/*.ts",
 		"./drizzle/**/*.ts",
-		"env.ts"
 	]
 }
